@@ -45,30 +45,24 @@
       //if it is getlogin that means we are fetching the records
       
       case 'getlogin':
-        $phonenmbr = 18654;
-        $password = 'pass';
-				if(isset($phonenmbr) && isset($password))
-				{
-					$phoneInt = (int)$phonenmbr;
-					$db = new Operation(); 
-          //$id = com_create_guid();
-          //echo $phonenmbr;
-          //echo $phoneInt;
-          echo $db->getLogin($phoneInt, $password);
-					if($db->getLogin($phoneInt, $password))
-					{
-						$response['error'] = false;
-						$response['message'] = 'User login successfully';
-					}else{
-
-						$response['error'] = true;
-						$response['message'] = 'Could not login user';
-					}
-				}else{
-					$response['error'] = true; 
-					$response['message'] = 'Required Parameters are missing';
-				}
-			break; 
+		if(isset($_POST['phone']) && isset($_POST['password']))
+		{
+			$phoneInt = (int)$_POST['phone'];
+			$db = new Operation(); 
+			$id = 3;//com_create_guid();
+			if($db->getLogin($phoneInt, $_POST['password']))
+			{
+				$response['error'] = false;
+				$response['message'] = 'User login successfully';
+			}else{
+				$response['error'] = true;
+				$response['message'] = 'Could not login user';
+			}
+		}else{
+			$response['error'] = true; 
+			$response['message'] = 'Required Parameters are missing';
+		}
+	break;
 		}
 		
 	}else{

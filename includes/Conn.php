@@ -3,7 +3,7 @@
 class Conn
 {
     //Variable to store database link
-    private $con;
+    public $con;
  
     //Class constructor
     function __construct()
@@ -18,16 +18,14 @@ class Conn
         include_once dirname(__FILE__) . '/Constants.php';
  
         //connecting to mysql database
-        $this->con = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
- 
-        //Checking if any error occured while connecting
-        if (mysqli_connect_errno()) {
-            echo "Failed to connect to MySQL: " . mysqli_connect_error();
-            return null;
+        try{
+        $con = new PDO("mysql:host=localhost;dbname=biashara", "root", "");
+        $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+    }catch(PDOException $error){
+            echo "Connection failed: " . $error->getMessage();
         }
- 
-        //finally returning the connection link
-        return $this->con;
+        
     }
  
 }
